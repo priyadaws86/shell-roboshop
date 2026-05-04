@@ -21,4 +21,4 @@ fi
 
 echo "$instance: $IP"
 
-]
+done
