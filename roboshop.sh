@@ -29,11 +29,11 @@ aws route53 change-resource-record-sets \
     ,"Changes": [{
       "Action"              : "upsert"
       ,"ResourceRecordSet"  : {
-        "Name"              : "'$RECORD_NAME'"
+        "Name"              : "$RECORD_NAME"
         ,"Type"             : "A"
         ,"TTL"              : 1
         ,"ResourceRecords"  : [{
-            "Value"         : "'$IP'"
+            "Value"         : "$IP"
         }]
       }
     }]
