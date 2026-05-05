@@ -68,6 +68,6 @@ if [ $INDEX -le 0 ]; then
 fi
 
 systemctl restart catalogue
-echo -e"Loading products and restarting catalogue ... $G Success $N"
+echo -e "Loading products and restarting catalogue ... $G Success $N"
 
  
