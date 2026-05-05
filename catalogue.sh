@@ -10,6 +10,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
+SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.daws86.cloud
 
 mkdir -p $LOGS_FOLDER
@@ -26,7 +27,7 @@ VALIDATE(){
         echo -e "$2 ... $R Failed $N" | tee -a $LOG_FILE
         exit 1
     else
-        echo -e "$2 ... $G Successful $N" | tee -a $LOG_FILE
+        echo -e "$2 ... $G Success $N" | tee -a $LOG_FILE
     fi
 }
 
@@ -60,7 +61,7 @@ VALIDATE $? "Unzip the Catalogue code"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing nodejs dependencies for Catalogue"
 
-cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_FILE
 VALIDATE $? "Copying systemctl service file"
 
 systemctl daemon-reload
@@ -68,7 +69,7 @@ systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enabling Catalogue service"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copy Mongo repo" 
 
  dnf install mongodb-mongosh -y &>>$LOG_FILE
