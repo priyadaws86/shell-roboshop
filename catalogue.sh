@@ -60,6 +60,9 @@ VALIDATE $? "Downloading Catalogue application code"
 cd /app 
 VALIDATE $? "Changing to app directory"
 
+rm -rf /app/* &>>$LOG_FILE
+VALIDATE $? "Removing existing code"
+
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzip the Catalogue code"
 
@@ -70,7 +73,6 @@ cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$LOG_F
 VALIDATE $? "Copying systemctl service file"
 
 systemctl daemon-reload
-
 systemctl enable catalogue &>>$LOG_FILE
 VALIDATE $? "Enabling Catalogue service"
 
