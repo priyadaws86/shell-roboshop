@@ -54,7 +54,7 @@ systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongosh -y &>>$LOG_FILE
+dnf install mongodb-mongoshwert -y &>>$LOG_FILE
 
 INDEX=$(mongosh mongodb.daws86.cloud --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 
