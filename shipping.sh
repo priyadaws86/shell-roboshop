@@ -76,12 +76,17 @@ VaLIDATE $? "Installing MySQL client"
 
 mysql -h MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
  if [ $? -ne 0 ]; then
-       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql
-       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
-       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
+       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
+          VALIDATE $? "Creating Shipping database schema"
+       
+       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql  &>>$LOG_FILE
+            VALIDATE $? "Creating Shipping database user"
+       
+       mysql -h MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
+            VALIDATE $? "Loading Shipping database with master data"    
 
 else
-         echo -e "Shipping database already exists ... $Y SKIPPING $N"
+         echo -e "Shipping database already exists ... $Y SKIPPING $N" | tee -a $LOG_FILE
      fi
 
 systemctl restart shipping &>>$LOG_FILE
