@@ -51,19 +51,23 @@ rm -rf /usr/share/nginx/html/*
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
 
 cd /usr/share/nginx/html 
-unzip /tmp/frontend.zip 
+
+unzip /tmp/frontend.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading and extracting Frontend code"
 
 rm -rf vim /etc/nginx/nginx.conf   
 VALIDATE $? "Removing existing Nginx configuration file"
 
-cp  $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
+cp  $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf 
 VALIDATE $? "Copying Nginx configuration file"
 
 
-systemctl restart nginx  &>>$LOG_FILE
+systemctl restart nginx
 VALIDATE $? "Restarting Nginx service"
 
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+echo -e "Script executed in: $Y $TOTAL_TIME seconds $N"
 
 
 
