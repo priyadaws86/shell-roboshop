@@ -64,7 +64,7 @@ VALIDATE $? "Copying Nginx configuration file"
 nginx -t &>>$LOG_FILE
 VALIDATE $? "Testing Nginx configuration"
 
-systemctl restart nginx
+systemctl restart nginx &>>$LOG_FILE 
 VALIDATE $? "Restarting Nginx service"
 
 END_TIME=$(date +%s)
