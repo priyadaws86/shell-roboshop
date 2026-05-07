@@ -39,9 +39,9 @@ VALIDATE $? "Installing Redis"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis &>>$LOG_FILE
  VALIDATE $? "Allowing remote connections to Redis
 
+ systemctl enable redis &>>$LOG_FILE
+ VALIDATE $? "Enable Redis
 
-systemctl enable redis  &>>$LOG_FILE 
-VALIDATE $? "Enabling Redis"
+ systemctl start redis &>>$LOG_FILE
+ VALIDATE $? "Start Redis
 
-systemctl start redis 
-VALIDATE $? "Starting Redis"
