@@ -55,7 +55,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip  &>>$LOG_FILE
 VALIDATE $? "Downloading and extracting Frontend code"
 
-rm -rf vim /etc/nginx/nginx.conf   
+rm -rf /etc/nginx/nginx.conf   
 VALIDATE $? "Removing existing Nginx configuration file"
 
 cp  $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf 
