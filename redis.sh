@@ -1,5 +1,3 @@
-#!/bin/bash
-
 USERID=$(id -u)
 
 R="\e[31m"
@@ -28,24 +26,22 @@ VALIDATE(){
         echo -e "$2 ... $G Successful $N" | tee -a $LOG_FILE
     fi
 }
- 
- cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
- VALIDATE $? "Adding Mongo repo"
 
- dnf install mongodb-org -y &>>$LOG_FILE
- VALIDATE $? "Installing MongoDB"
+dnf module disable redis -y &>>$LOG_FILE
+VALIDATE $? "Disabling existing Redis module"
 
- systemctl enable mongod &>>$LOG_FILE
- VALIDATE $? "Enable MongoDB"
+dnf module enable redis:7 -y &>>$LOG_FILE
+VALIDATE $? "Enabling Redis module"
 
- systemctl start mongod &>>$LOG_FILE
- VALIDATE $? "Start MongoDB"
+dnf install redis -y  &>>$LOG_FILE
+VALIDATE $? "Installing Redis"
 
- sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod. conf &>>$LOG_FILE
- VALIDATE $? "Allowing remote connections to MongoDB"
-
- systemctl restart mongod &>>$LOG_FILE
-  VALIDATE $? "Restarting MongoDB"
-  
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis &>>$LOG_FILE
+ VALIDATE $? "Allowing remote connections to Redis
 
 
+systemctl enable redis  &>>$LOG_FILE 
+VALIDATE $? "Enabling Redis"
+
+systemctl start redis 
+VALIDATE $? "Starting Redis"
