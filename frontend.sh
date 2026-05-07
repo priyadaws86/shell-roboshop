@@ -48,7 +48,7 @@ VALIDATE $? "Starting Nginx service"
 
 rm -rf /usr/share/nginx/html/* 
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
 
 cd /usr/share/nginx/html 
 
@@ -58,7 +58,7 @@ VALIDATE $? "Downloading and extracting Frontend code"
 rm -rf /etc/nginx/nginx.conf   
 VALIDATE $? "Removing existing Nginx configuration file"
 
-cp  $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf 
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf 
 VALIDATE $? "Copying Nginx configuration file"
 
 
