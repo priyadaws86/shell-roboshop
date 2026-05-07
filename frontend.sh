@@ -61,6 +61,8 @@ VALIDATE $? "Removing existing Nginx configuration file"
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf 
 VALIDATE $? "Copying Nginx configuration file"
 
+nginx -t &>>$LOG_FILE
+VALIDATE $? "Testing Nginx configuration"
 
 systemctl restart nginx
 VALIDATE $? "Restarting Nginx service"
